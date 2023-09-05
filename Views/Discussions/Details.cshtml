@@ -4,6 +4,7 @@
     var userLoggedIn = Context.Session.GetString("UserEmail");
 }
 
+<a href="/Discussions" class="btn btn-primary">Back to Discussions</a>
 <article class="card" style="width: 18rem;">
     <div class="card-body">
         <h5 class="card-title">@Model.Topic</h5>
@@ -13,9 +14,8 @@
         <p class="card-text">Updated: @Model.Updated</p>
         @if (userLoggedIn == Model.Author.Email)
         {
-            <a href="#" class="btn btn-danger">Delete</a>
+            <a asp-controller="Discussions" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
         }
-        <p><a href="/Discussions">Back to discussions</a></p>
     </div>
 </article>
 
