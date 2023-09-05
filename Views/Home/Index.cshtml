@@ -1,9 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model User
+@{
+
+    var userLoggedIn = Context.Session.GetString("UserEmail");
+}
 
 <div class="text-center">
-    <h1 class="display-4">Welcome @Model.Email</h1>
+    <h1 class="display-4">Welcome @userLoggedIn</h1>
 </div>
 

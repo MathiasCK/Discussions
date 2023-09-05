@@ -10,13 +10,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var user = new User();
-        var userEmail = HttpContext.Session.GetString("UserEmail");
-
-        user.Email = userEmail;
-
-        return View(user);
-
+        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
