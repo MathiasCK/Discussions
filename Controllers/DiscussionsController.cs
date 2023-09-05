@@ -50,7 +50,7 @@ public class DiscussionsController : Controller
             Body = discussion.Body,
             Author = new User
             {
-                Id = 2222222,
+                Id = HttpContext.Session.GetString("UserId"),
                 Email = HttpContext.Session.GetString("UserEmail"),
             },
             Created = DateTime.Now,

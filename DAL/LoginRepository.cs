@@ -1,5 +1,6 @@
 ﻿using Discussions.Controllers;
 using Discussions.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Discussions.DAL
 {
@@ -18,6 +19,9 @@ namespace Discussions.DAL
         {
             try
             {
+                Guid uuid = Guid.NewGuid();
+
+                _httpContextAccessor.HttpContext.Session.SetString("UserId", uuid.ToString());
                 _httpContextAccessor.HttpContext.Session.SetString("UserEmail", user.Email);
                 _logger.LogInformation("Sucsessfully set Session value UserEmail to: {userEmail}", user.Email);
             } catch (Exception e)

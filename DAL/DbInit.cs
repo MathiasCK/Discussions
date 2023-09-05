@@ -10,27 +10,21 @@ namespace Discussions.DAL
             using var serviceScope = app.ApplicationServices.CreateAsyncScope();
             DB context = serviceScope.ServiceProvider.GetRequiredService<DB>();
 
-            try
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("ER22" + e.Message);
-            }
-            
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
+            Guid uuid1 = Guid.NewGuid();
+            Guid uuid2 = Guid.NewGuid();
 
             User user1 = new User
             {
-                Id = 1,
+                Id = uuid1.ToString(),
                 Email = "mck@mail.no"
             };
 
             User user2 = new User
             {
-                Id = 2,
+                Id = uuid2.ToString(),
                 Email = "john@doe.no"
             };
 
