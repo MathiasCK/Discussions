@@ -14,17 +14,14 @@
     <div class="col-sm-6">
         @foreach (var discussion in Model)
         {
-            <article class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">@discussion.Topic</h5>
-                    <p class="card-text">@discussion.Body</p>
-                    <a asp-controller="Discussions" asp-action="Details" asp-route-id="@discussion.Id" class="btn btn-primary">View</a>
-                    @if (userLoggedIn == discussion?.Author?.Email)
-                    {
-                        <a asp-controller="Discussions" asp-action="Delete" asp-route-id="@discussion.Id" class="btn btn-danger">Delete</a>
-                    }
-                </div>
-            </article>
+            <a asp-controller="Discussions" asp-action="Details" asp-route-id="@discussion.Id" class="btn">
+                <article class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@discussion.Topic</h5>
+                        <p class="card-text">@discussion.Body</p>
+                    </div>
+                </article>
+            </a>
         }
     </div>
 </section>

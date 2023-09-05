@@ -42,6 +42,6 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
-DiscussionDatabase.db
-DiscussionDatabase.db-shm
-DiscussionDatabase.db-wal
+*.db
+*.db-shm
+*.db-wal
