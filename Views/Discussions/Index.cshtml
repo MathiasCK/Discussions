@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Discussion>
+@{
+
+    var userLoggedIn = Context.Session.GetString("UserEmail");
+}
+
+<h1>Discussions</h1>
+
+<section class="row">
+    <div class="col-sm-6">
+        @foreach (var item in Model)
+        {
+            <article class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Header</h5>
+                    <p class="card-text">@item.Body</p>
+                    <a href="#" class="btn btn-primary">View</a>
+                    @if (userLoggedIn == item.Author.Email)
+                    {
+                        <a href="#" class="btn btn-danger">Delete</a>
+                    }
+                </div>
+            </article>
+        }
+    </div>
+</section>
