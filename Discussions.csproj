@@ -11,10 +11,12 @@
   <ItemGroup>
     <None Remove="DAL\" />
     <None Remove="Views\Discussions\" />
+    <None Remove="Views\Comments\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DAL\" />
     <Folder Include="Views\Discussions\" />
+    <Folder Include="Views\Comments\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.10" />

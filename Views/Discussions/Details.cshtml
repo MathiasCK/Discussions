@@ -9,7 +9,6 @@
     <div class="card-body">
         <h5 class="card-title">@Model.Topic</h5>
         <p class="card-text">@Model.Body</p>
-        <p class="card-text">Id: @Model.Id</p>
         <p class="card-text">Created: <span class="date">@Model.Created</span></p>
         <p class="card-text">Updated: <span class="date">@Model.Updated</span></p>
         @if (sessionId == Model?.Author?.Id)
@@ -21,6 +20,10 @@
 </article>
 
 <h5 class="card-title">Comments</h5>
+
+<a class="btn btn-success" asp-controller="Comments" asp-action="Create" asp-route-discussionId="@Model.Id">
+    Create new comment
+</a>
 
 @foreach (Comment comment in Model.Comments)
 {

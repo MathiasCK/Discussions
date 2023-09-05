@@ -1,0 +1,16 @@
+﻿@model Discussion;
+
+<h1>Create new comment for discussion "@Model.Topic"</h1>
+
+<form action="@Url.Action("CreateComment", "Comments")" method="post">
+    <div class="form-group" style="display: none">
+        <label for="discussionId"></label><span class="text-danger">*</span>
+        <input name="discussionId" class="form-control" value="@Model.Id" />
+    </div>
+    <div class="form-group">
+        <label for="comment"></label><span class="text-danger">*</span>
+        <input name="comment" class="form-control"  />
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="/Discussions" class="btn btn-primary">Back to Discussions</a>
+</form>

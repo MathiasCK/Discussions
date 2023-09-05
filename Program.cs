@@ -12,6 +12,7 @@ builder.Services.AddScoped<UserSessionFiler>();
 builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<IDiscussionsRepository, DiscussionsRepository>();
+builder.Services.AddScoped<ICommentsRepository, CommentsRepository>();
 builder.Services.AddDbContext<DB>(options =>
 {
     options.UseSqlite(builder.Configuration["ConnectionStrings:DbConnection"]);
