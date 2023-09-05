@@ -1,4 +1,5 @@
-﻿using Discussions.Models;
+﻿using Castle.Components.DictionaryAdapter;
+using Discussions.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -86,6 +87,8 @@ namespace Discussions.DAL
                     return false;
                 }
 
+                DeleteDiscussionComments(id);
+
                 _db.Discussions.Remove(discussion);
                 await _db.SaveChangesAsync();
                 _logger.LogInformation("[DiscussionsRepository]: Successfully deleted discussion: '{discussion}'", discussion);
@@ -95,6 +98,21 @@ namespace Discussions.DAL
             {
                 _logger.LogError("[DiscussionsRepository]: Could not delete discussion with id: {id} - {e}", id, e.Message);
                 return false;
+            }
+        }
+
+        public async void DeleteDiscussionComments(string id)
+        {
+            try
+            {
+                var discussionComments = await _db.Comments.Where(cmt => cmt.DiscussionId == id).ToListAsync();
+                _db.Comments.RemoveRange(discussionComments);
+                _logger.LogInformation("[DiscussionsRepository]: Successfully deleted comments for discussion: '{discussion}'", id);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("[DiscussionsRepository]: Could not delete comments for discussion with id: " + id + " - " + e.Message);
             }
         }
 
