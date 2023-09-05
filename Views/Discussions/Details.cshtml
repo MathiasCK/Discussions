@@ -1,0 +1,20 @@
+﻿@model Discussion
+@{
+
+    var userLoggedIn = Context.Session.GetString("UserEmail");
+}
+
+<article class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Header</h5>
+        <p class="card-text">@Model.Body</p>
+        <p class="card-text">Id: @Model.Id</p>
+        <p class="card-text">Created: @Model.Created</p>
+        <p class="card-text">Updated: @Model.Updated</p>
+        @if (userLoggedIn == Model.Author.Email)
+        {
+            <a href="#" class="btn btn-danger">Delete</a>
+        }
+        <p><a href="/Discussions">Back to discussions</a></p>
+    </div>
+</article>
