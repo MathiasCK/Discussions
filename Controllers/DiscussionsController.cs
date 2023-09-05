@@ -1,11 +1,10 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using Discussions.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using System.Reflection.PortableExecutable;
 
 namespace Discussions.Controllers;
 
+[ServiceFilter(typeof(UserSessionFiler))]
 public class DiscussionsController : Controller
 {
 

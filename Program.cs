@@ -1,4 +1,5 @@
-﻿using Discussions.DAL;
+﻿using Discussions.Controllers;
+using Discussions.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<UserSessionFiler>();
 builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 
