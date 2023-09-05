@@ -4,8 +4,8 @@ namespace Discussions.Models
 {
 	public class Comment
 	{
-		public int Id { get; set; }
-		public int DiscussionId { get; set; }
+		public string ? Id { get; set; }
+		public string ? DiscussionId { get; set; }
         [StringLength(100)]
         public string Text { get; set; } = string.Empty;
         public virtual User ? Author { get; set; }
@@ -13,7 +13,7 @@ namespace Discussions.Models
 
 		public Comment() { }
 
-		public Comment(int id, int discussionId, string text, User author, DateTime created)
+		public Comment(string id, string discussionId, string text, User author, DateTime created)
 		{
 			Id = id;
 			DiscussionId = discussionId;

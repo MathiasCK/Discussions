@@ -22,7 +22,7 @@ public class DiscussionsController : Controller
         return View(discussions);
     }
 
-    public async Task<IActionResult> Details(int id)
+    public async Task<IActionResult> Details(string id)
     {
 
         var discussion = await _discussionsRepository.FetchDiscussion(id);
@@ -42,10 +42,11 @@ public class DiscussionsController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(Discussion discussion)
     {
+        Guid uuid = Guid.NewGuid();
 
         Discussion newDiscussion = new Discussion
         {
-            Id = 2222222,
+            Id = uuid.ToString(),
             Topic = discussion.Topic,
             Body = discussion.Body,
             Author = new User

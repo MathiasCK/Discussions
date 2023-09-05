@@ -26,7 +26,7 @@ namespace Discussions.DAL
             }
         }
 
-        public async Task<Discussion?> FetchDiscussion(int id)
+        public async Task<Discussion?> FetchDiscussion(string id)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Discussions.DAL
             }
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(string id)
         {
             try
             {

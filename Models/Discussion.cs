@@ -4,9 +4,9 @@ namespace Discussions.Models
 {
 	public class Discussion
 	{
-		
-		public int ? Id { get; set; }
-		[StringLength(50)]
+
+		public string? Id { get; set; } = string.Empty;
+        [StringLength(50)]
         public string Topic { get; set; } = string.Empty;
         [StringLength(100)]
         public string Body { get; set; } = string.Empty;
@@ -17,7 +17,7 @@ namespace Discussions.Models
 
         public Discussion() { }
 
-        public Discussion(int id, string topic, string body, User author, DateTime created, DateTime updated)
+        public Discussion(string id, string topic, string body, User author, DateTime created, DateTime updated)
 		{
 			Id = id;
             Topic = topic;
