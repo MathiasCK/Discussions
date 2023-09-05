@@ -1,0 +1,17 @@
+﻿@model Discussion
+
+<h1>Create new discussion</h1>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Header"></label><span class="text-danger">*</span>
+        <input asp-for="Header" class="form-control" />
+        <span asp-validation-for="Header" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Body"></label><span class="text-danger">*</span>
+        <input asp-for="Body" class="form-control" />
+        <span asp-validation-for="Body" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

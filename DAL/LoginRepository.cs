@@ -18,11 +18,7 @@ namespace Discussions.DAL
         {
             try
             {
-                Guid uuid = Guid.NewGuid();
-                user.Id = uuid.ToString();
-
                 _httpContextAccessor.HttpContext.Session.SetString("UserEmail", user.Email);
-                _httpContextAccessor.HttpContext.Session.SetString("UserId", user.Id);
                 _logger.LogInformation("Sucsessfully set Session value UserEmail to: {userEmail}", user.Email);
             } catch (Exception e)
             {

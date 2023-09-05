@@ -9,8 +9,17 @@ namespace Discussions.DAL
         {
             using var serviceScope = app.ApplicationServices.CreateAsyncScope();
             DB context = serviceScope.ServiceProvider.GetRequiredService<DB>();
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+
+            try
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ER22" + e.Message);
+            }
+            
 
 
             User user1 = new User

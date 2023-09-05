@@ -2,9 +2,13 @@
 @{
 
     var userLoggedIn = Context.Session.GetString("UserEmail");
+    Console.WriteLine("USER" + userLoggedIn);
 }
 
 <h1>Discussions</h1>
+<a class="btn btn-success" asp-controller="Discussions" asp-action="Create">
+    Create new discussion
+</a>
 
 <section class="row">
     <div class="col-sm-6">
@@ -15,7 +19,7 @@
                     <h5 class="card-title">@discussion.Header</h5>
                     <p class="card-text">@discussion.Body</p>
                     <a asp-controller="Discussions" asp-action="Details" asp-route-id="@discussion.Id" class="btn btn-primary">View</a>
-                    @if (userLoggedIn == discussion.Author.Email)
+                    @if (userLoggedIn == discussion?.Author?.Email)
                     {
                         <a href="#" class="btn btn-danger">Delete</a>
                     }
