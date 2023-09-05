@@ -71,7 +71,7 @@ namespace Discussions.DAL
             }
         }
 
-        public async Task<bool> Delete(string id)
+        public async Task<bool> DeleteDiscussion(string id)
         {
             try
             {

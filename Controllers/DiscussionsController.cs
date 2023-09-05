@@ -3,6 +3,7 @@ using Discussions.Models;
 using Discussions.DAL;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Discussions.Controllers;
 
@@ -64,6 +65,31 @@ public class DiscussionsController : Controller
         if (!created)
         {
             return BadRequest("Could not create discussion");
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> Delete(string id)
+    {
+
+        var discussion = await _discussionsRepository.FetchDiscussion(id);
+
+        if (discussion == null)
+        {
+            return BadRequest("Discussion not found");
+        }
+        return View(discussion);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteConfirmed(string id)
+    {
+        bool deleted = await _discussionsRepository.DeleteDiscussion(id);
+
+        if (!deleted)
+        {
+            return BadRequest("Could not delete discussion");
         }
 
         return RedirectToAction(nameof(Index));

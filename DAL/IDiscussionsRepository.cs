@@ -8,7 +8,7 @@ namespace Discussions.DAL
         Task<Discussion?> FetchDiscussion(string id);
         Task<bool> CreateDiscussion(Discussion discussion);
         Task<bool> Update(Discussion discussion);
-        Task<bool> Delete(string id);
+        Task<bool> DeleteDiscussion(string id);
     }
 }
 

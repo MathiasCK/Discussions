@@ -21,7 +21,7 @@
                     <a asp-controller="Discussions" asp-action="Details" asp-route-id="@discussion.Id" class="btn btn-primary">View</a>
                     @if (userLoggedIn == discussion?.Author?.Email)
                     {
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <a asp-controller="Discussions" asp-action="Delete" asp-route-id="@discussion.Id" class="btn btn-danger">Delete</a>
                     }
                 </div>
             </article>
