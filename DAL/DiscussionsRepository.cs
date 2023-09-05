@@ -39,6 +39,61 @@ namespace Discussions.DAL
             }
         }
 
+        public async Task<bool> CreateDiscussion(Discussion discussion)
+        {
+            try
+            {
+                _db.Discussions.Add(discussion);
+                await _db.SaveChangesAsync();
+                _logger.LogInformation("[DiscussionsRepository]: Successfully created discussion: '{discussion}'", discussion);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("[DiscussionsRepository]: Could not create discussion {discussion} - {e}", discussion, e.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> Update(Discussion discussion)
+        {
+            try
+            {
+                _db.Discussions.Update(discussion);
+                await _db.SaveChangesAsync();
+                _logger.LogInformation("[DiscussionsRepository]: Successfully updated discussion: '{discussion}'", discussion);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("[DiscussionsRepository]: Could not update discussion {discussion} - {e}", discussion, e.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            try
+            {
+                var discussion = await FetchDiscussion(id);
+
+                if (discussion == null)
+                {
+                    return false;
+                }
+
+                _db.Discussions.Remove(discussion);
+                await _db.SaveChangesAsync();
+                _logger.LogInformation("[DiscussionsRepository]: Successfully deleted discussion: '{discussion}'", discussion);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("[DiscussionsRepository]: Could not delete discussion with id: {id} - {e}", id, e.Message);
+                return false;
+            }
+        }
+
     }
 }
 
