@@ -46,7 +46,7 @@ public class DiscussionsController : Controller
         Discussion newDiscussion = new Discussion
         {
             Id = 2222222,
-            Header = discussion.Header,
+            Topic = discussion.Topic,
             Body = discussion.Body,
             Author = new User
             {

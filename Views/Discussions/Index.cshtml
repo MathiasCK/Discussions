@@ -16,7 +16,7 @@
         {
             <article class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">@discussion.Header</h5>
+                    <h5 class="card-title">@discussion.Topic</h5>
                     <p class="card-text">@discussion.Body</p>
                     <a asp-controller="Discussions" asp-action="Details" asp-route-id="@discussion.Id" class="btn btn-primary">View</a>
                     @if (userLoggedIn == discussion?.Author?.Email)

@@ -7,7 +7,7 @@ namespace Discussions.Models
 		
 		public int ? Id { get; set; }
 		[StringLength(50)]
-        public string Header { get; set; } = string.Empty;
+        public string Topic { get; set; } = string.Empty;
         [StringLength(100)]
         public string Body { get; set; } = string.Empty;
         public virtual User ? Author { get; set; }
@@ -17,10 +17,10 @@ namespace Discussions.Models
 
         public Discussion() { }
 
-        public Discussion(int id, string header, string body, User author, DateTime created, DateTime updated)
+        public Discussion(int id, string topic, string body, User author, DateTime created, DateTime updated)
 		{
 			Id = id;
-			Header = header;
+            Topic = topic;
 			Body = body;
 			Author = author;
 			Created = created;
