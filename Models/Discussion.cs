@@ -13,8 +13,10 @@ namespace Discussions.Models
         public User Author { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
+		public List<Comment> Comments { get; set; } = new List<Comment>();
 
-		public Discussion(int id, string header, string body, User author, DateTime created, DateTime updated)
+
+        public Discussion(int id, string header, string body, User author, DateTime created, DateTime updated)
 		{
 			Id = id;
 			Header = header;

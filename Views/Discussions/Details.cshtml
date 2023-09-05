@@ -18,3 +18,19 @@
         <p><a href="/Discussions">Back to discussions</a></p>
     </div>
 </article>
+
+<h5 class="card-title">Comments</h5>
+
+@foreach (Comment comment in Model.Comments)
+{
+    <article class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">@comment.Text</h5>
+            <p class="card-text">By: @comment.Author.Email</p>
+            @if (userLoggedIn == comment.Author.Email)
+            {
+                <a href="#" class="btn btn-danger">Delete</a>
+            }
+        </div>
+    </article>
+}
