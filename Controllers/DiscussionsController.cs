@@ -70,6 +70,32 @@ public class DiscussionsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    public async Task<IActionResult> Update(string id)
+    {
+
+        var discussion = await _discussionsRepository.FetchDiscussion(id);
+
+        if (discussion == null)
+        {
+            return BadRequest("Discussion not found");
+        }
+        return View(discussion);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateConfirmed(Discussion discussion)
+    {
+
+        bool deleted = await _discussionsRepository.Update(discussion);
+
+        if (!deleted)
+        {
+            return BadRequest("Could not delete discussion");
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
     public async Task<IActionResult> Delete(string id)
     {
 

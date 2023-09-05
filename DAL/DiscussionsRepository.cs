@@ -1,4 +1,6 @@
 ﻿using Discussions.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace Discussions.DAL
@@ -59,6 +61,8 @@ namespace Discussions.DAL
         {
             try
             {
+                discussion.Updated = DateTime.Now;
+                
                 _db.Discussions.Update(discussion);
                 await _db.SaveChangesAsync();
                 _logger.LogInformation("[DiscussionsRepository]: Successfully updated discussion: '{discussion}'", discussion);

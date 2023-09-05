@@ -1,0 +1,23 @@
+﻿@model Discussion
+
+<h1>Update discussion: ""@Model.Topic"</h1>
+
+<form asp-action="UpdateConfirmed" asp-route-id="@Model.Id" method="post">
+    <div class="form-group">
+        <label asp-for="Topic"></label><span class="text-danger">*</span>
+        <input asp-for="Topic" class="form-control" />
+        <span asp-validation-for="Topic" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Body"></label><span class="text-danger">*</span>
+        <input asp-for="Body" class="form-control" />
+        <span asp-validation-for="Body" class="text-danger"></span>
+    </div>
+    <div class="form-group" style="display: none">
+        <label asp-for="Created"></label><span class="text-danger">*</span>
+        <input asp-for="Created" class="form-control" />
+        <span asp-validation-for="Created" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-warning">Update</button>
+    <a href="/Discussions" class="btn btn-primary">Back to Discussions</a>
+</form>
