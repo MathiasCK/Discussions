@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Discussions.DAL
 {
-	public class CommentsRepository : ICommentsRepository
-	{
+    public class CommentsRepository : ICommentsRepository
+    {
         private readonly DB _db;
         private readonly ILogger<DiscussionsRepository> _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -53,6 +53,42 @@ namespace Discussions.DAL
             {
                 _logger.LogError("[DiscussionsRepository]: Could not fetch discusstion with id: '{id}' - {e}", id, e.Message);
                 return null;
+            }
+        }
+
+        public async Task<Comment?> FetchComment(string id)
+        {
+            try
+            {
+                return await _db.Comments.FirstOrDefaultAsync(i => i.Id == id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("[DiscussionsRepository]: Could not fetch comment with id: '{id}' - {e}", id, e.Message);
+                return null;
+            }
+        }
+
+        public async Task<bool> DeleteComment(string id)
+        {
+            try
+            {
+                var comment = await FetchComment(id);
+
+                if (comment == null)
+                {
+                    return false;
+                }
+
+                _db.Comments.Remove(comment);
+                await _db.SaveChangesAsync();
+                _logger.LogInformation("[DiscussionsRepository]: Successfully deleted comment: '{comment}'", comment);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("[DiscussionsRepository]: Could not delete comment with id: {id} - {e}", id, e.Message);
+                return false;
             }
         }
     }

@@ -33,7 +33,7 @@
             <p class="card-text">By: @comment?.Author?.Email</p>
             @if (sessionId == comment?.Author?.Id)
             {
-                <a href="#" class="btn btn-danger">Delete</a>
+                <a asp-controller="Comments" asp-action="Delete" asp-route-commentId="@comment.Id" class="btn btn-danger">Delete</a>
             }
         </div>
     </article>

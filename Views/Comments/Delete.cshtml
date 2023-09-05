@@ -1,0 +1,9 @@
+﻿@model Comment;
+
+<h1>Are you sure you want to delete your comment "@Model.Text"</h1>
+
+<form asp-action="DeleteComment" asp-route-id="@Model.Id" asp-route-discussionId="@Model.DiscussionId" method="post">
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a href="/Discussions/Details/@Model.Id" class="btn btn-primary">Cancel</a>
+</form>
+

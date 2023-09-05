@@ -45,6 +45,32 @@ namespace Discussions.Controllers
 
             return RedirectToAction("Details", "Discussions", new { id = discussionId });
         }
+
+        public async Task<IActionResult> Delete(string commentId)
+        {
+            var comment = await _commentsRepository.FetchComment(commentId);
+
+            if (comment == null)
+            {
+                return BadRequest("Could not find comment with id: " + commentId);
+            }
+            return View(comment);
+        }
+
+        [HttpPost]
+        [HttpPost]
+        public async Task<IActionResult> DeleteComment(string id, string discussionId)
+        {
+            bool deleted = await _commentsRepository.DeleteComment(id);
+
+            if (!deleted)
+            {
+                return BadRequest("Could not delete discussion");
+            }
+
+            return RedirectToAction("Details", "Discussions", new { id = discussionId });
+        }
+
     }
 }
 
