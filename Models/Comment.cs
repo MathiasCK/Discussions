@@ -8,8 +8,10 @@ namespace Discussions.Models
 		public int DiscussionId { get; set; }
         [StringLength(100)]
         public string Text { get; set; } = string.Empty;
-        public User Author { get; set; }
+        public virtual User ? Author { get; set; }
 		public DateTime Created { get; set; }
+
+		public Comment() { }
 
 		public Comment(int id, int discussionId, string text, User author, DateTime created)
 		{

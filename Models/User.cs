@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Discussions.Models
+﻿namespace Discussions.Models
 {
 	public class User
 	{
-        [Required]
+
+		public int Id { get; set; }
         public string Email { get; set; } = string.Empty;
 	}
 }

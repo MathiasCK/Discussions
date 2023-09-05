@@ -16,4 +16,8 @@
     <Folder Include="DAL\" />
     <Folder Include="Views\Discussions\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.10" />
+  </ItemGroup>
 </Project>

@@ -10,11 +10,12 @@ namespace Discussions.Models
         public string Header { get; set; } = string.Empty;
         [StringLength(100)]
         public string Body { get; set; } = string.Empty;
-        public User Author { get; set; }
+        public virtual User ? Author { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
-		public List<Comment> Comments { get; set; } = new List<Comment>();
+		public virtual List<Comment> ? Comments { get; set; } = new List<Comment>();
 
+        public Discussion() { }
 
         public Discussion(int id, string header, string body, User author, DateTime created, DateTime updated)
 		{

@@ -8,7 +8,7 @@ namespace Discussions.DAL
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<HomeController> _logger;
 
-        public LoginRepository(IHttpContextAccessor httpContextAccessor, ILogger<HomeController> logger)
+        public LoginRepository(IHttpContextAccessor httpContextAccessor, ILogger<HomeController> logger, DB db)
         {
             _httpContextAccessor = httpContextAccessor;
             _logger = logger;
