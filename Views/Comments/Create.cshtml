@@ -1,6 +1,6 @@
 ﻿@model Discussion;
 
-<h1>Create new comment for discussion "@Model.Topic"</h1>
+<h4>Create new comment for discussion "@Model.Topic"</h4>
 
 <form action="@Url.Action("CreateComment", "Comments")" method="post">
     <div class="form-group" style="display: none">
@@ -8,9 +8,11 @@
         <input name="discussionId" class="form-control" value="@Model.Id" />
     </div>
     <div class="form-group">
-        <label for="comment"></label><span class="text-danger">*</span>
-        <input name="comment" class="form-control"  />
+        <label for="comment">Text</label><span class="text-danger">*</span>
+        <input name="comment" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-success">Create</button>
-    <a href="/Discussions" class="btn btn-primary">Back to Discussions</a>
+    <div class="mt-2">
+        <button type="submit" class="btn btn-success">Create</button>
+        <a asp-controller="Discussions" asp-action="Details" asp-route-id="@Model?.Id" class="btn btn-primary">Back to Discussion</a>
+    </div>
 </form>
