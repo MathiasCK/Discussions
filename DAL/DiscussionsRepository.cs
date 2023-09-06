@@ -50,7 +50,7 @@ namespace Discussions.DAL
 
                 if (existingUser == null)
                 {
-                    throw new Exception("[DiscussionsRepository]: Failed to set discussion Author with id: " + sessionId);
+                    throw new Exception("[DiscussionsRepository]: Failed to create discussion Author with id: " + sessionId);
                 }
 
                 discussion.Author = existingUser;
