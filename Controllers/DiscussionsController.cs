@@ -76,7 +76,7 @@ public class DiscussionsController : Controller
             return BadRequest("Could not create discussion");
         }
 
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction("Details", "Discussions", new { id = newDiscussion.Id });
     }
 
     public async Task<IActionResult> Update(string id)
@@ -99,10 +99,10 @@ public class DiscussionsController : Controller
 
         if (!deleted)
         {
-            return BadRequest("Could not delete discussion");
+            return BadRequest("Could not update discussion");
         }
 
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction("Details", "Discussions", new { id = discussion.Id });
     }
 
     public async Task<IActionResult> Delete(string id)
