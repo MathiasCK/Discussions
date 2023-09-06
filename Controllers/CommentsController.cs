@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Discussions.Controllers
 {
+    [ServiceFilter(typeof(UserSessionFiler))]
     public class CommentsController : Controller
     {
         private readonly ICommentsRepository _commentsRepository;
