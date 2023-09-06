@@ -1,10 +1,10 @@
 ﻿@model Discussion
 
 <a asp-controller="Discussions" asp-action="Details" asp-route-id="@Model?.Id" class="btn">
-    <div class="card">
-        <div class="card-body">
+    <div class="card" style="width: 18rem; height: 18rem;">
+        <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between;">
             <h5 class="card-title">@Model.Topic</h5>
-            <p class="card-text">@Model?.Body</p>
+            <p class="card-text" style="display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; -webkit-line-clamp: 3; height: 80%;">@Model?.Body</p>
             <p class="card-text"><small class="text-muted">By @Model?.Author?.Email</small></p>
         </div>
     </div>
