@@ -18,6 +18,10 @@ namespace Discussions.DAL
 
             Guid uuidDiscussion1 = Guid.NewGuid();
             Guid uuidDiscussion2 = Guid.NewGuid();
+            Guid uuidDiscussion3 = Guid.NewGuid();
+            Guid uuidDiscussion4 = Guid.NewGuid();
+            Guid uuidDiscussion5 = Guid.NewGuid();
+            Guid uuidDiscussion6 = Guid.NewGuid();
 
             Guid uuidComment1 = Guid.NewGuid();
             Guid uuidComment2 = Guid.NewGuid();
@@ -44,6 +48,10 @@ namespace Discussions.DAL
 
             Discussion discussion1 = new Discussion(uuidDiscussion1.ToString(), "This is a header 1", "This is text 1", user1, DateTime.Now, DateTime.Now);
             Discussion discussion2 = new Discussion(uuidDiscussion2.ToString(), "This is a header 2", "This is text 2", user2, DateTime.Now, DateTime.Now);
+            Discussion discussion3 = new Discussion(uuidDiscussion3.ToString(), "This is a header 3", "This is text 3", user1, DateTime.Now, DateTime.Now);
+            Discussion discussion4 = new Discussion(uuidDiscussion4.ToString(), "This is a header 4", "This is text 4", user2, DateTime.Now, DateTime.Now);
+            Discussion discussion5 = new Discussion(uuidDiscussion5.ToString(), "This is a header 5", "This is text 5", user1, DateTime.Now, DateTime.Now);
+            Discussion discussion6 = new Discussion(uuidDiscussion6.ToString(), "This is a header 6", "This is text 6", user2, DateTime.Now, DateTime.Now);
 
             if (!context.Users.Any())
             {
@@ -62,6 +70,10 @@ namespace Discussions.DAL
                 {
                     discussion1,
                     discussion2,
+                    discussion3,
+                    discussion4,
+                    discussion5,
+                    discussion6,
                 };
                 context.AddRange(discussions);
                 context.SaveChanges();

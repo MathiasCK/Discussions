@@ -4,23 +4,29 @@
     var userLoggedIn = Context.Session.GetString("UserEmail");
 }
 
-<h1>Discussions</h1>
-<a class="btn btn-success" asp-controller="Discussions" asp-action="Create">
-    Create new discussion
-</a>
-
-<section class="row">
-    <div class="col-sm-6">
-        @foreach (var discussion in Model)
-        {
-            <a asp-controller="Discussions" asp-action="Details" asp-route-id="@discussion.Id" class="btn">
-                <article class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">@discussion.Topic</h5>
-                        <p class="card-text">@discussion.Body</p>
-                    </div>
-                </article>
-            </a>
-        }
+<header class="row mb-5">
+    <div class="col text-center">
+        <h1 class="display-3">Discussions</h1>
+        <p class="lead">Join or create a discussion</p>
+        <a class="btn btn-outline-success btn-lg" asp-controller="Discussions" asp-action="Create">
+            Create new discussion
+        </a>
     </div>
-</section>
+</header>
+
+<center>
+    @foreach (var discussion in Model)
+    {
+        <a asp-controller="Discussions" asp-action="Details" asp-route-id="@discussion?.Id" class="btn">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@discussion.Topic</h5>
+                    <p class="card-text">@discussion?.Body</p>
+                    <p class="card-text"><small class="text-muted">By @discussion?.Author?.Email</small></p>
+                </div>
+            </div>
+        </a>
+    }
+</center>
+
+
