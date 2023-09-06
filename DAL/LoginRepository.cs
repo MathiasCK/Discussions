@@ -1,6 +1,5 @@
 ﻿using Discussions.Controllers;
 using Discussions.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Discussions.DAL
@@ -22,21 +21,43 @@ namespace Discussions.DAL
         {
             try
             {
-                var userExists = await FetchUser(user.Email);
-                string sessionId = userExists?.Id ?? Guid.NewGuid().ToString();
+                var userExists = await FetchOrCreateUser(user.Email) ?? throw new Exception("500 - Database error");
 
-                _httpContextAccessor.HttpContext?.Session.SetString("UserId", sessionId);
-                _httpContextAccessor.HttpContext?.Session.SetString("UserEmail", user.Email);
-                _logger.LogInformation("Sucsessfully set Session value 'UserEmail' to: {userEmail} and value 'UserId' to: {userId}", user.Email, sessionId);
+                _httpContextAccessor.HttpContext?.Session.SetString("UserId", userExists.Id);
+                _httpContextAccessor.HttpContext?.Session.SetString("UserEmail", userExists.Email);
+                _logger.LogInformation("[LoginRepository]: Sucsessfully set Session value 'UserEmail' to: {userEmail} and value 'UserId' to: {userId}", user.Email, userExists.Id);
             } catch (Exception e)
             {
-                _logger.LogError("There was an error setting Session value UserEmail: {e}", e.Message);
+                _logger.LogError("[LoginRepository]: There was an error setting Session value UserEmail: {e}", e.Message);
             }
         }
-        public async Task<User?> FetchUser(string email)
+        public async Task<User?> FetchOrCreateUser(string email)
         {
-            return await _db.Users.FirstOrDefaultAsync(u => u.Email == email) ?? null;
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
 
+            if (user == null)
+            {
+                try
+                {
+                    var newUser = new User
+                    {
+                        Email = email,
+                        Id = Guid.NewGuid().ToString(),
+                    };
+
+                    _db.Users.Add(newUser);
+                    await _db.SaveChangesAsync();
+
+                    _logger.LogInformation("[LoginRepository]: Sucsessfully created user with email: '{email}' and id: '{id}'", newUser.Email, newUser.Id);
+                    return newUser;
+                } catch (Exception e)
+                {
+                    _logger.LogInformation("[LoginRepository]: There was an error creating user  with email: '{email}' - {e}", email, e.Message);
+                    throw new Exception("[LoginRepository]: There was an error creating user  with email: " + email + " - " + e.Message);
+                }
+            }
+
+            return user;
         }
 }
 }

@@ -69,7 +69,7 @@ public class DiscussionsController : Controller
             Updated = DateTime.Now,
         };
 
-        bool created = await _discussionsRepository.CreateDiscussion(newDiscussion, sessionId);
+        bool created = await _discussionsRepository.CreateDiscussion(newDiscussion, sessionEmail);
 
         if (!created)
         {

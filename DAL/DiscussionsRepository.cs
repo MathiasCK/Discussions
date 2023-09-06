@@ -42,16 +42,16 @@ namespace Discussions.DAL
             }
         }
 
-        public async Task<bool> CreateDiscussion(Discussion discussion, string sessionId)
+        public async Task<bool> CreateDiscussion(Discussion discussion, string sessionEmail)
         {
             try
             {
-                var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Id == sessionId);
+                var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Email == sessionEmail);
 
                 if (existingUser == null)
                 {
-                    throw new Exception("[DiscussionsRepository]: Failed to create discussion Author with id: " + sessionId);
-                }
+                    throw new Exception("[DiscussionsRepository]: Failed to create discussion Author with email: " + sessionEmail);
+                } 
 
                 discussion.Author = existingUser;
 

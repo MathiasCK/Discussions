@@ -1,12 +1,11 @@
-﻿using System;
-using Discussions.Models;
+﻿using Discussions.Models;
 
 namespace Discussions.DAL
 {
 	public interface ILoginRepository
 	{
-        public void SetSessionEmail(User user);
-        public Task<User?> FetchUser(string email);
+        void SetSessionEmail(User user);
+        Task<User?> FetchOrCreateUser(string email);
 
     }
 }
