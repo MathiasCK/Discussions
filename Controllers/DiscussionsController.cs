@@ -56,7 +56,7 @@ public class DiscussionsController : Controller
         {
             _logger.LogError("Could not create discussion: Session expired");
             HttpContext.Session.Remove("UserId");
-            HttpContext.Session.GetString("UserEmail");
+            HttpContext.Session.Remove("UserEmail");
             return RedirectToAction("Index", "Login");
         }
 
