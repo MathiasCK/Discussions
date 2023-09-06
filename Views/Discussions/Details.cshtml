@@ -4,37 +4,58 @@
     var sessionId = Context.Session.GetString("UserId");
 }
 
-<a href="/Discussions" class="btn btn-primary">Back to Discussions</a>
-<article class="card" style="width: 18rem;">
+<header class="mb-2">
+    <a asp-controller="Discussions" asp-action="Index" class="btn btn-primary">Back to Discussions</a>
+</header>
+
+<article class="card">
+    <div class="card-header">
+        @Model.Topic
+    </div>
     <div class="card-body">
-        <h5 class="card-title">@Model.Topic</h5>
-        <p class="card-text">@Model.Body</p>
-        <p class="card-text">Created: <span class="date">@Model.Created</span></p>
-        <p class="card-text">Updated: <span class="date">@Model.Updated</span></p>
-        @if (sessionId == Model?.Author?.Id)
-        {
-            <a asp-controller="Discussions" asp-action="Update" asp-route-id="@Model?.Id" class="btn btn-warning">Update</a>
-            <a asp-controller="Discussions" asp-action="Delete" asp-route-id="@Model?.Id" class="btn btn-danger">Delete</a>
-        }
+        <blockquote class="blockquote mb-0">
+            <div class="mb-2">
+                <p>@Model.Body</p>
+            </div>
+            <footer class="blockquote-footer"><cite title="Source Title">@Model?.Author?.Email.</cite></footer>
+            @if (sessionId == Model?.Author?.Id)
+            {
+                <a asp-controller="Discussions" asp-action="Update" asp-route-id="@Model?.Id" class="btn btn-warning">Update</a>
+                <a asp-controller="Discussions" asp-action="Delete" asp-route-id="@Model?.Id" class="btn btn-danger">Delete</a>
+            }
+        </blockquote>
+    </div>
+    <div class="card-footer text-muted date">
+        @Model?.Created
     </div>
 </article>
 
-<h5 class="card-title">Comments</h5>
-
-<a class="btn btn-success" asp-controller="Comments" asp-action="Create" asp-route-discussionId="@Model.Id">
-    Create new comment
-</a>
+<section class="mt-2 mb-2">
+    <h4>Comments</h4>
+    <a class="btn btn-success" asp-controller="Comments" asp-action="Create" asp-route-discussionId="@Model.Id">
+        Create new comment
+    </a>
+</section>
 
 @foreach (Comment comment in Model.Comments)
 {
-    <article class="card" style="width: 18rem;">
+
+    <article class="card mb-2" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">@comment.Text</h5>
-            <p class="card-text">By: @comment?.Author?.Email</p>
-            @if (sessionId == comment?.Author?.Id)
-            {
-                <a asp-controller="Comments" asp-action="Delete" asp-route-commentId="@comment.Id" class="btn btn-danger">Delete</a>
-            }
+            <blockquote class="blockquote mb-0">
+                <div class="mb-2">
+                    <p>@comment.Text</p>
+                </div>
+                <footer class="blockquote-footer"><cite title="Source Title">@comment?.Author?.Email</cite></footer>
+                @if (sessionId == Model?.Author?.Id)
+                {
+                    <a asp-controller="Discussions" asp-action="Update" asp-route-id="@Model?.Id" class="btn btn-warning">Update</a>
+                    <a asp-controller="Discussions" asp-action="Delete" asp-route-id="@Model?.Id" class="btn btn-danger">Delete</a>
+                }
+            </blockquote>
+        </div>
+        <div class="card-footer text-muted date">
+            @comment?.Created
         </div>
     </article>
 }
