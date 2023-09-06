@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Discussions.Models;
 using Discussions.DAL;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Discussions.Controllers;
 
@@ -11,15 +8,23 @@ namespace Discussions.Controllers;
 public class DiscussionsController : Controller
 {
     private readonly IDiscussionsRepository _discussionsRepository;
+    private readonly ILogger<DiscussionsRepository> _logger;
 
-    public DiscussionsController(IDiscussionsRepository discussionsRepository)
+    public DiscussionsController(IDiscussionsRepository discussionsRepository, ILogger<DiscussionsRepository> logger)
     {
         _discussionsRepository = discussionsRepository;
+        _logger = logger;
     }
 
     public async Task<IActionResult> Index()
     {
         var discussions = await _discussionsRepository.FetchDiscussions();
+
+        if (discussions == null)
+        {
+            return BadRequest("Could not fetch discussions");
+        }
+
         return View(discussions);
     }
 
@@ -43,17 +48,27 @@ public class DiscussionsController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(Discussion discussion)
     {
-        Guid uuid = Guid.NewGuid();
 
-        Discussion newDiscussion = new Discussion
+        var sessionId = HttpContext.Session.GetString("UserId");
+        var sessionEmail = HttpContext.Session.GetString("UserEmail");
+
+        if (sessionId == null || sessionEmail == null)
         {
-            Id = uuid.ToString(),
+            _logger.LogError("Could not create comment: Session expired");
+            HttpContext.Session.Remove("UserId");
+            HttpContext.Session.GetString("UserEmail");
+            return RedirectToAction("Index", "Login");
+        }
+
+        Discussion newDiscussion = new()
+        {
+            Id = Guid.NewGuid().ToString(),
             Topic = discussion.Topic,
             Body = discussion.Body,
             Author = new User
             {
-                Id = HttpContext.Session.GetString("UserId"),
-                Email = HttpContext.Session.GetString("UserEmail"),
+                Id = sessionId,
+                Email = sessionEmail,
             },
             Created = DateTime.Now,
             Updated = DateTime.Now,
