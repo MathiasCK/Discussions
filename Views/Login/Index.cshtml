@@ -1,9 +1,18 @@
 ﻿@model User
 
-<form method="post">
-    <div class="form-group">
-        <label for="Email">Email</label>
-        <input type="email" class="form-control" id="Email" name="Email" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+<section class="container py-5 h-100">
+    <article class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                <form method="post" class="card-body p-5 text-center">
+                    <h3 class="mb-5">Sign in</h3>
+                    <div class="form-outline mb-4">
+                        <label for="Email">Email</label>
+                        <input type="email" class="form-control" id="Email" name="Email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                </form>
+            </div>
+        </div>
+    </article>
+</section>
