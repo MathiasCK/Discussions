@@ -5,7 +5,7 @@ namespace Discussions.Models
 	public class Discussion
 	{
 
-		public string? Id { get; set; } = string.Empty;
+		public string Id { get; set; } = string.Empty;
         [StringLength(50)]
         public string Topic { get; set; } = string.Empty;
         [StringLength(100)]
@@ -13,7 +13,7 @@ namespace Discussions.Models
         public virtual User ? Author { get; set; }
         public DateTime ? Created { get; set; }
         public DateTime ? Updated { get; set; }
-		public virtual List<Comment> ? Comments { get; set; } = new List<Comment>();
+		public virtual List<Comment> Comments { get; set; } = new List<Comment>();
 
         public Discussion() { }
 

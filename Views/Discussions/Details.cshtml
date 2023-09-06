@@ -47,10 +47,9 @@
                     <p>@comment.Text</p>
                 </div>
                 <footer class="blockquote-footer"><cite title="Source Title">@comment?.Author?.Email</cite></footer>
-                @if (sessionId == Model?.Author?.Id)
-                {
-                    <a asp-controller="Discussions" asp-action="Update" asp-route-id="@Model?.Id" class="btn btn-warning">Update</a>
-                    <a asp-controller="Discussions" asp-action="Delete" asp-route-id="@Model?.Id" class="btn btn-danger">Delete</a>
+                @if (sessionId == comment?.Author?.Id)
+                    {
+                    <a asp-controller="Comments" asp-action="Delete" asp-route-commentId="@comment?.Id" class="btn btn-danger">Delete</a>
                 }
             </blockquote>
         </div>

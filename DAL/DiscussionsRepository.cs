@@ -42,10 +42,19 @@ namespace Discussions.DAL
             }
         }
 
-        public async Task<bool> CreateDiscussion(Discussion discussion)
+        public async Task<bool> CreateDiscussion(Discussion discussion, string sessionId)
         {
             try
             {
+                var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Id == sessionId);
+
+                if (existingUser == null)
+                {
+                    throw new Exception("[DiscussionsRepository]: Failed to set discussion Author with id: " + sessionId);
+                }
+
+                discussion.Author = existingUser;
+
                 _db.Discussions.Add(discussion);
                 await _db.SaveChangesAsync();
                 _logger.LogInformation("[DiscussionsRepository]: Successfully created discussion: '{discussion}'", discussion);

@@ -54,7 +54,7 @@ public class DiscussionsController : Controller
 
         if (sessionId == null || sessionEmail == null)
         {
-            _logger.LogError("Could not create comment: Session expired");
+            _logger.LogError("Could not create discussion: Session expired");
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.GetString("UserEmail");
             return RedirectToAction("Index", "Login");
@@ -65,17 +65,11 @@ public class DiscussionsController : Controller
             Id = Guid.NewGuid().ToString(),
             Topic = discussion.Topic,
             Body = discussion.Body,
-            Author = new User
-            {
-                Id = sessionId,
-                Email = sessionEmail,
-            },
             Created = DateTime.Now,
             Updated = DateTime.Now,
-    
         };
 
-        bool created = await _discussionsRepository.CreateDiscussion(newDiscussion);
+        bool created = await _discussionsRepository.CreateDiscussion(newDiscussion, sessionId);
 
         if (!created)
         {

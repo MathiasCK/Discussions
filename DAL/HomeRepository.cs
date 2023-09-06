@@ -19,7 +19,7 @@ namespace Discussions.DAL
 		{
             try
             {
-                var userEmail = _httpContextAccessor.HttpContext.Session.GetString("UserEmail");
+                var userEmail = _httpContextAccessor.HttpContext?.Session.GetString("UserEmail");
 
                 if (string.IsNullOrEmpty(userEmail))
                 {
