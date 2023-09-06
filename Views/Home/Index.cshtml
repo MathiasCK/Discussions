@@ -6,7 +6,13 @@
     var userLoggedIn = Context.Session.GetString("UserEmail");
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome @userLoggedIn</h1>
-</div>
+<header class="row mb-5">
+    <div class="col text-center">
+        <h1 class="display-3">Welcome @userLoggedIn</h1>
+        <p class="lead">Join or create a discussion</p>
+        <a class="btn btn-outline-primary btn-lg" asp-controller="Discussions" asp-action="Index">
+            View Discussions
+        </a>
+    </div>
+</header>
 
