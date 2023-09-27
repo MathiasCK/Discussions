@@ -20,16 +20,18 @@ namespace Discussions.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(User user)
+        public async Task<IActionResult> Index(User user)
         {
+            var validCredentials = await _loginRepository.CheckUserCredentials(user);
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && validCredentials == "OK")
             {
                 _loginRepository.SetSessionEmail(user);
 
                 return RedirectToAction("Index", "Home");
             }
 
+            ViewBag.ErrorMessage = validCredentials;
             return View(user);
         }
     }

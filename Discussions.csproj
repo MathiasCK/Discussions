@@ -13,14 +13,19 @@
     <None Remove="Views\Discussions\" />
     <None Remove="Views\Comments\" />
     <None Remove="Views\Logout\" />
+    <None Remove="Views\Signup\" />
+    <None Remove="DiscussionDatabase.db-wal" />
+    <None Remove="DiscussionDatabase.db-shm" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DAL\" />
     <Folder Include="Views\Discussions\" />
     <Folder Include="Views\Comments\" />
     <Folder Include="Views\Logout\" />
+    <Folder Include="Views\Signup\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.10" />
   </ItemGroup>

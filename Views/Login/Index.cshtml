@@ -1,4 +1,14 @@
 ﻿@model User
+@{
+    var errorMessage = ViewBag.ErrorMessage as string;
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">
+        @errorMessage
+    </div>
+}
 
 <section class="container py-5 h-100">
     <article class="row d-flex justify-content-center align-items-center h-100">
@@ -10,9 +20,14 @@
                         <label for="Email">Email</label>
                         <input type="email" class="form-control" id="Email" name="Email" required>
                     </div>
+                    <div class="form-outline mb-4">
+                        <label for="Password">Password</label>
+                        <input type="password" class="form-control" id="Password" name="Password" required>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
                 </form>
             </div>
+            <center><span>Are you new here?<a asp-controller="Signup" asp-action="Index" class="btn btn-link">Sign up</a></span></center>
         </div>
     </article>
 </section>

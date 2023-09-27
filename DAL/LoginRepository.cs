@@ -1,6 +1,8 @@
 ﻿using Discussions.Controllers;
 using Discussions.Models;
 using Microsoft.EntityFrameworkCore;
+using BCrypt.Net;
+using System;
 
 namespace Discussions.DAL
 {
@@ -17,48 +19,40 @@ namespace Discussions.DAL
             _db = db;
         }
 
+        public async Task<String?> CheckUserCredentials(User user)
+        {
+            try
+            {
+                var usr = await _db.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+
+                if (usr == null)
+                {
+                    return "No user registered with email " + user.Email;
+                }
+
+                var valid = BCrypt.Net.BCrypt.Verify(user.Password, usr.Password);
+
+                return valid ? "OK" : "Password is incorrect";
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("[LoginRepository]: There was an fetching user with email '{email}' : {e}", user.Email, e.Message);
+                throw new Exception("[LoginRepository]: There was an fetching creating user  with email: " + user.Email + " : " + e.Message);
+            }
+        }
+
         public async void SetSessionEmail(User user)
         {
             try
             {
-                var userExists = await FetchOrCreateUser(user.Email) ?? throw new Exception("500 - Database error");
-
-                _httpContextAccessor.HttpContext?.Session.SetString("UserId", userExists.Id);
-                _httpContextAccessor.HttpContext?.Session.SetString("UserEmail", userExists.Email);
-                _logger.LogInformation("[LoginRepository]: Sucsessfully set Session value 'UserEmail' to: {userEmail} and value 'UserId' to: {userId}", user.Email, userExists.Id);
+                _httpContextAccessor.HttpContext?.Session.SetString("UserId", user.Id);
+                _httpContextAccessor.HttpContext?.Session.SetString("UserEmail", user.Email);
+                _logger.LogInformation("[LoginRepository]: Sucsessfully set Session value 'UserEmail' to: {userEmail} and value 'UserId' to: {userId}", user.Email, user.Id);
             } catch (Exception e)
             {
                 _logger.LogError("[LoginRepository]: There was an error setting Session value UserEmail: {e}", e.Message);
             }
         }
-        public async Task<User?> FetchOrCreateUser(string email)
-        {
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
-
-            if (user == null)
-            {
-                try
-                {
-                    var newUser = new User
-                    {
-                        Email = email,
-                        Id = Guid.NewGuid().ToString(),
-                    };
-
-                    _db.Users.Add(newUser);
-                    await _db.SaveChangesAsync();
-
-                    _logger.LogInformation("[LoginRepository]: Sucsessfully created user with email: '{email}' and id: '{id}'", newUser.Email, newUser.Id);
-                    return newUser;
-                } catch (Exception e)
-                {
-                    _logger.LogInformation("[LoginRepository]: There was an error creating user  with email: '{email}' - {e}", email, e.Message);
-                    throw new Exception("[LoginRepository]: There was an error creating user  with email: " + email + " - " + e.Message);
-                }
-            }
-
-            return user;
-        }
-}
+    }
 }
 
