@@ -17,7 +17,7 @@ namespace Discussions.DAL
       _db = db;
     }
 
-    public async Task<User?> CreateUser(User user)
+    public async Task<String> CreateUser(User user)
     {
       try
       {
@@ -25,7 +25,7 @@ namespace Discussions.DAL
 
         if (userExists != null)
         {
-          return null;
+          return "User with email " + user.Email + " already exists";
         }
 
         user.Id = Guid.NewGuid().ToString();
@@ -35,11 +35,12 @@ namespace Discussions.DAL
         await _db.SaveChangesAsync();
         _logger.LogInformation("[SignupRepository]: Successfully created user: '{email}'", user.Email);
 
-        return user;
+        CreateSession(user);    
+        return "OK";
       } catch (Exception e)
       {
         _logger.LogError("[SignupRepository]: There was an error creating user with email '{email}' : {e}", user.Email, e.Message);
-        throw new Exception("[SignupRepository]: There was an creating user  with email: " + user.Email + " : " + e.Message);
+                return "There was an error creating user, please try again later";
       }
     }
 

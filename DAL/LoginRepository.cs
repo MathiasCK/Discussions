@@ -17,20 +17,29 @@ namespace Discussions.DAL
             _db = db;
         }
 
-        public async Task<User?> CheckUserCredentials(User user)
+        public async Task<String> CheckUserCredentials(User user)
         {
             try
             {
-                var usr = await _db.Users.FirstOrDefaultAsync(u => u.Email == user.Email) ?? null;
+                var usr = await _db.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+
+                if (usr == null)
+                {
+                    return "No user found with email " + user.Email;
+                }
 
                 var valid = BCrypt.Net.BCrypt.Verify(user.Password, usr?.Password);
 
-                return valid ? usr : null;
+                if (valid) {
+                    CreateSession(usr);
+                }
+
+                return valid ? "OK" : "Password is incorrect";
             }
             catch (Exception e)
             {
                 _logger.LogError("[LoginRepository]: There was an fetching user with email '{email}' : {e}", user.Email, e.Message);
-                throw new Exception("[LoginRepository]: There was an fetching creating user  with email: " + user.Email + " : " + e.Message);
+                return "There was an error logging in user, please try again later";
             }
         }
 

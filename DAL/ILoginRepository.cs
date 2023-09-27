@@ -4,7 +4,7 @@ namespace Discussions.DAL
 {
 	public interface ILoginRepository
 	{
-        Task<User?> CheckUserCredentials(User user);
+        Task<String> CheckUserCredentials(User user);
         void CreateSession(User user);
 
     }

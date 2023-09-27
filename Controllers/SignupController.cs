@@ -28,25 +28,15 @@ namespace Discussions.Controllers
                 return View();
             }
 
-            var usr = await _signupRepository.CreateUser(user);
+            var response = await _signupRepository.CreateUser(user);
 
-            if (usr == null)
+            if (response != "OK" || !ModelState.IsValid)
             {
-                ViewBag.ErrorMessage = "User with email " + user.Email + " already exists";
+                ViewBag.ErrorMessage = response;
                 return View();
             }
-
-            if (!ModelState.IsValid)
-            {
-                ViewBag.ErrorMessage = "There was an error creating user, please try again later";
-                return View();
-            }
-
-            _signupRepository.CreateSession(usr);
 
             return RedirectToAction("Index", "Home");
-
-
         }
     }
 }
