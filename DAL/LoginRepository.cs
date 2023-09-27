@@ -1,18 +1,16 @@
 ﻿using Discussions.Controllers;
 using Discussions.Models;
 using Microsoft.EntityFrameworkCore;
-using BCrypt.Net;
-using System;
 
 namespace Discussions.DAL
 {
 	public class LoginRepository : ILoginRepository
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<LoginController> _logger;
         private readonly DB _db;
 
-        public LoginRepository(IHttpContextAccessor httpContextAccessor, ILogger<HomeController> logger, DB db)
+        public LoginRepository(IHttpContextAccessor httpContextAccessor, ILogger<LoginController> logger, DB db)
         {
             _httpContextAccessor = httpContextAccessor;
             _logger = logger;
@@ -41,7 +39,7 @@ namespace Discussions.DAL
             }
         }
 
-        public async void SetSessionEmail(User user)
+        public void SetSessionEmail(User user)
         {
             try
             {
