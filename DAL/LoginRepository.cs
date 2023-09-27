@@ -17,20 +17,15 @@ namespace Discussions.DAL
             _db = db;
         }
 
-        public async Task<String?> CheckUserCredentials(User user)
+        public async Task<User?> CheckUserCredentials(User user)
         {
             try
             {
-                var usr = await _db.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+                var usr = await _db.Users.FirstOrDefaultAsync(u => u.Email == user.Email) ?? null;
 
-                if (usr == null)
-                {
-                    return "No user registered with email " + user.Email;
-                }
+                var valid = BCrypt.Net.BCrypt.Verify(user.Password, usr?.Password);
 
-                var valid = BCrypt.Net.BCrypt.Verify(user.Password, usr.Password);
-
-                return valid ? "OK" : "Password is incorrect";
+                return valid ? usr : null;
             }
             catch (Exception e)
             {
@@ -39,7 +34,7 @@ namespace Discussions.DAL
             }
         }
 
-        public void SetSessionEmail(User user)
+        public void CreateSession(User user)
         {
             try
             {

@@ -43,7 +43,7 @@ namespace Discussions.DAL
       }
     }
 
-    public void SetSessionEmail(User user)
+    public void CreateSession(User user)
     {
       try
       {

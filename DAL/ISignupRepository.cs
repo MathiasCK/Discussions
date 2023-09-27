@@ -4,7 +4,7 @@ namespace Discussions.DAL
 {
 	public interface ISignupRepository
 	{
-        void SetSessionEmail(User user);
+        void CreateSession(User user);
         Task<User?> CreateUser(User user);
 
     }

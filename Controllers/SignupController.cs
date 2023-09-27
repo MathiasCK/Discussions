@@ -38,11 +38,11 @@ namespace Discussions.Controllers
 
             if (!ModelState.IsValid)
             {
-                ViewBag.ErrorMessage = "There was an error creating user";
+                ViewBag.ErrorMessage = "There was an error creating user, please try again later";
                 return View();
             }
 
-            _signupRepository.SetSessionEmail(user);
+            _signupRepository.CreateSession(usr);
 
             return RedirectToAction("Index", "Home");
 

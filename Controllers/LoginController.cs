@@ -22,17 +22,22 @@ namespace Discussions.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(User user)
         {
-            var validCredentials = await _loginRepository.CheckUserCredentials(user);
+            var usr = await _loginRepository.CheckUserCredentials(user);
 
-            if (ModelState.IsValid && validCredentials == "OK")
+            if (usr == null)
             {
-                _loginRepository.SetSessionEmail(user);
-
-                return RedirectToAction("Index", "Home");
+                ViewBag.ErrorMessage = "Invalid credentials";
+                return View();
             }
 
-            ViewBag.ErrorMessage = validCredentials;
-            return View(user);
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ErrorMessage = "There was an error logging in, please try again later";
+                return View();
+            }
+
+            _loginRepository.CreateSession(usr);
+            return RedirectToAction("Index", "Home");
         }
     }
 }
