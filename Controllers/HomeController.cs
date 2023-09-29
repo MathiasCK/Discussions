@@ -10,6 +10,11 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        if (TempData.ContainsKey("ErrorMessage"))
+        {
+            ViewBag.ErrorMessage = TempData["ErrorMessage"]?.ToString();
+        }
+
         return View();
     }
 

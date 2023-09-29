@@ -22,7 +22,18 @@ public class DiscussionsController : Controller
 
         if (discussions == null)
         {
-            return BadRequest("Could not fetch discussions");
+            TempData["ErrorMessage"] = "Discussions could not be fetched";
+            return RedirectToAction("Index", "Home");
+        }
+
+        if (TempData.ContainsKey("ErrorMessage"))
+        {
+            ViewBag.ErrorMessage = TempData["ErrorMessage"]?.ToString();
+        }
+
+        if (TempData.ContainsKey("SuccessMessage"))
+        {
+            ViewBag.SuccessMessage = TempData["SuccessMessage"]?.ToString();
         }
 
         return View(discussions);
@@ -33,15 +44,32 @@ public class DiscussionsController : Controller
 
         var discussion = await _discussionsRepository.FetchDiscussion(id);
 
+        if (TempData.ContainsKey("SuccessMessage"))
+        {
+            ViewBag.SuccessMessage = TempData["SuccessMessage"]?.ToString();
+        }
+
+        if(TempData.ContainsKey("ErrorMessage"))
+        {
+            ViewBag.ErrorMessage = TempData["ErrorMessage"]?.ToString();
+        }
+
         if (discussion == null)
         {
-            return BadRequest("Discussion not found");
+            TempData["ErrorMessage"] = "Discussion could not be fetched";
+            return RedirectToAction("Index", "Discussions");
         }
+
         return View(discussion);
     }
 
     public IActionResult Create()
     {
+        if (TempData.ContainsKey("ErrorMessage"))
+        {
+            ViewBag.ErrorMessage = TempData["ErrorMessage"]?.ToString();
+        }
+
         return View();
     }
 
@@ -54,9 +82,12 @@ public class DiscussionsController : Controller
 
         if (sessionId == null || sessionEmail == null)
         {
-            _logger.LogError("Could not create discussion: Session expired");
+            var msg = "Could not create discussion: Session expired";
+            _logger.LogError(msg);
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("UserEmail");
+
+            TempData["ErrorMessage"] = msg;
             return RedirectToAction("Index", "Login");
         }
 
@@ -73,9 +104,11 @@ public class DiscussionsController : Controller
 
         if (!created)
         {
-            return BadRequest("Could not create discussion");
+            TempData["ErrorMessage"] = "Discussion could not be created";
+            return RedirectToAction("Create", "Discussions");
         }
 
+        TempData["SuccessMessage"] = "Discussion created";
         return RedirectToAction("Details", "Discussions", new { id = newDiscussion.Id });
     }
 
@@ -86,7 +119,8 @@ public class DiscussionsController : Controller
 
         if (discussion == null)
         {
-            return BadRequest("Discussion not found");
+            TempData["ErrorMessage"] = "Discussion could not be fetched";
+            return RedirectToAction("Index", "Discussions");
         }
         return View(discussion);
     }
@@ -95,13 +129,15 @@ public class DiscussionsController : Controller
     public async Task<IActionResult> UpdateConfirmed(Discussion discussion)
     {
 
-        bool deleted = await _discussionsRepository.Update(discussion);
+        bool updated = await _discussionsRepository.Update(discussion);
 
-        if (!deleted)
+        if (!updated)
         {
-            return BadRequest("Could not update discussion");
+            TempData["ErrorMessage"] = "Discussion could not be updated";
+            return RedirectToAction("Details", "Discussions", new { id = discussion.Id });
         }
 
+        TempData["SuccessMessage"] = "Discussion updated";
         return RedirectToAction("Details", "Discussions", new { id = discussion.Id });
     }
 
@@ -112,7 +148,8 @@ public class DiscussionsController : Controller
 
         if (discussion == null)
         {
-            return BadRequest("Discussion not found");
+            TempData["ErrorMessage"] = "Discussion could not be fetched";
+            return RedirectToAction("Index", "Discussions");
         }
         return View(discussion);
     }
@@ -124,9 +161,11 @@ public class DiscussionsController : Controller
 
         if (!deleted)
         {
-            return BadRequest("Could not delete discussion");
+            TempData["ErrorMessage"] = "Discussion could not be deleted";
+            return RedirectToAction("Index", "Discussions");
         }
 
+        TempData["SuccessMessage"] = "Discussion deleted";
         return RedirectToAction(nameof(Index));
     }
 

@@ -1,9 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-}
-@{
-
     var userLoggedIn = Context.Session.GetString("UserEmail");
+    var errorMessage = ViewBag.ErrorMessage as string;
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div id="errorMessage" class="alert alert-danger">
+        @errorMessage
+    </div>
 }
 
 <header class="row mb-5">
@@ -16,3 +21,4 @@
     </div>
 </header>
 
+<script>setTimeout(() => document.getElementById("errorMessage").style.display = "none", 3000);</script>

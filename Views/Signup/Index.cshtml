@@ -4,7 +4,7 @@
 
 @if (!string.IsNullOrEmpty(errorMessage))
 {
-    <div class="alert alert-danger">
+    <div id="errorMessage" class="alert alert-danger">
         @errorMessage
     </div>
 }
@@ -34,4 +34,6 @@
         </div>
     </article>
 </section>
+
+<script>setTimeout(() => document.getElementById("errorMessage").style.display = "none", 3000);</script>
 

@@ -1,5 +1,16 @@
 ﻿@model Discussion
 
+@{
+    var errorMessage = ViewBag.ErrorMessage as string;
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div id="errorMessage" class="alert alert-danger">
+        @errorMessage
+    </div>
+}
+
 <h4>Create new discussion</h4>
 
 <form asp-action="Create">
@@ -18,3 +29,5 @@
         <a href="/Discussions" class="btn btn-primary">Back to Discussions</a>
     </div>
 </form>
+
+<script>setTimeout(() => document.getElementById("errorMessage").style.display = "none", 3000);</script>

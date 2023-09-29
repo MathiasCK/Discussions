@@ -1,11 +1,19 @@
 ﻿@{
     var errorMessage = ViewBag.ErrorMessage as string;
+    var successMessage = ViewBag.SuccessMessage as string;
 }
 
 @if (!string.IsNullOrEmpty(errorMessage))
 {
-    <div class="alert alert-danger">
+    <div id="errorMessage" class="alert alert-danger">
         @errorMessage
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div id="successMessage" class="alert alert-success">
+        @successMessage
     </div>
 }
 
@@ -30,3 +38,6 @@
         </div>
     </article>
 </section>
+
+<script>setTimeout(() => document.getElementById("errorMessage").style.display = "none", 3000);</script>
+<script>setTimeout(() => document.getElementById("successMessage").style.display = "none", 3000);</script>

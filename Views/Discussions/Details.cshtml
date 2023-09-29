@@ -2,6 +2,23 @@
 @{
 
     var sessionId = Context.Session.GetString("UserId");
+    var successMessage = ViewBag.SuccessMessage as string;
+    var errorMessage = ViewBag.ErrorMessage as string;
+}
+
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div id="successMessage" class="alert alert-success">
+        @successMessage
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div id="errorMessage" class="alert alert-danger">
+        @errorMessage
+    </div>
 }
 
 <header class="mb-2">
@@ -48,7 +65,7 @@
                 </div>
                 <footer class="blockquote-footer"><cite title="Source Title">@comment?.Author?.Email</cite></footer>
                 @if (sessionId == comment?.Author?.Id)
-                    {
+                {
                     <a asp-controller="Comments" asp-action="Delete" asp-route-commentId="@comment?.Id" class="btn btn-danger">Delete</a>
                 }
             </blockquote>
@@ -59,8 +76,7 @@
     </article>
 }
 
-<script>
-    // Function taken from https://stackoverflow.com/questions/3177836/how-to-format-time-since-xxx-e-g-4-minutes-ago-similar-to-stack-exchange-site
+<script>// Function taken from https://stackoverflow.com/questions/3177836/how-to-format-time-since-xxx-e-g-4-minutes-ago-similar-to-stack-exchange-site
     const formatDateTime = dateTime => {
         const seconds = Math.floor((new Date() - dateTime) / 1000);
 
@@ -93,6 +109,6 @@
     dates.forEach(date => {
         const currentDate = new Date(date.textContent)
         date.textContent = formatDateTime(currentDate);
-    })
-
-    </script>
+    })</script>
+<script>setTimeout(() => document.getElementById("errorMessage").style.display = "none", 3000);</script>
+<script>setTimeout(() => document.getElementById("successMessage").style.display = "none", 3000);</script>

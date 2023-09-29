@@ -16,6 +16,16 @@ namespace Discussions.Controllers
 
         public IActionResult Index()
         {
+            if (TempData.ContainsKey("ErrorMessage"))
+            {
+                ViewBag.ErrorMessage = TempData["ErrorMessage"]?.ToString();
+            }
+
+            if (TempData.ContainsKey("SuccessMessage"))
+            {
+                ViewBag.SuccessMessage = TempData["SuccessMessage"]?.ToString();
+            }
+
             return View();
         }
 

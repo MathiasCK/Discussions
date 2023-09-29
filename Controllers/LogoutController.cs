@@ -17,6 +17,7 @@ namespace Discussions.Controllers
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("UserEmail");
 
+            TempData["SuccessMessage"] = "Logout successful";
             return RedirectToAction("Index", "Login");
         }
     }

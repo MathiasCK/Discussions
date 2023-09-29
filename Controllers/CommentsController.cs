@@ -20,7 +20,8 @@ namespace Discussions.Controllers
 
             if (discussion == null)
             {
-                return BadRequest("Could not find discussion with id: " + discussionId);
+                TempData["ErrorMessage"] = "Discussion could not be fetched";
+                return RedirectToAction("Details", "Discussions", new { id = discussionId });
             }
             return View(discussion);
         }
@@ -40,10 +41,11 @@ namespace Discussions.Controllers
 
             if (!created)
             {
-                return BadRequest("Could not create comment");
+                TempData["ErrorMessage"] = "Comment could not be created";
+                return RedirectToAction("Details", "Discussions", new { id = discussionId });
             }
 
-
+            TempData["SuccessMessage"] = "Comment created";
             return RedirectToAction("Details", "Discussions", new { id = discussionId });
         }
 
@@ -53,7 +55,8 @@ namespace Discussions.Controllers
 
             if (comment == null)
             {
-                return BadRequest("Could not find comment with id: " + commentId);
+                TempData["ErrorMessage"] = "Comment could not be fetched";
+                return RedirectToAction("Index", "Discussions");
             }
             return View(comment);
         }
@@ -66,9 +69,11 @@ namespace Discussions.Controllers
 
             if (!deleted)
             {
-                return BadRequest("Could not delete discussion");
+                TempData["ErrorMessage"] = "Could not delete comment";
+                return RedirectToAction("Details", "Discussions", new { id = discussionId });
             }
 
+            TempData["SuccessMessage"] = "Comment deleted";
             return RedirectToAction("Details", "Discussions", new { id = discussionId });
         }
 
