@@ -30,8 +30,9 @@ if (!app.Environment.IsDevelopment())
 } else
 {
     app.UseDeveloperExceptionPage();
-    DbInit.Seed(app);
 }
+
+DbInit.Seed(app);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
