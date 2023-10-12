@@ -36,26 +36,53 @@ Follow these instructions to set up and run the Discussions application locally 
 
    ```shell
    git clone https://github.com/MathiasCK/Discussions.git
+   ```
+
+2. Navigate to project folder:
+
+   ```shell
    cd Discussions
    ```
 
-2. Install dependencies:
+3. Install dependencies:
 
    ```shell
    dotnet restore
    ```
 
-3. Build the application:
+4. Build the application:
 
    ```shell
    dotnet build
    ```
+   
+## Running the Project 🚀
 
-4. Run the application:
+### Development Mode 🔧
 
-   ```shell
+1. **Start the application**:
+
+   ```bash
    dotnet run
    ```
+
+The application will be accessible at [http://localhost:5124](http://localhost:5124)
+
+### Production Mode 🌐
+
+1. **Publish the application**:
+
+   ```bash
+   dotnet publish -c Release
+   ```
+
+2. **Run the production ready application**:
+
+   ```bash
+   cd bin/Release/net7.0/publish && dotnet Discussions.dll
+   ```
+
+The production ready application will be accessible at [http://localhost:5000](http://localhost:5000)
 
 ## Usage 📝
 
@@ -63,6 +90,16 @@ Visit the application in your web browser.
 Create an account or log in.
 Start creating discussions and participating in conversations.
 
-## License 📜
+## Contributing 🤝
 
-This project is licensed under the MIT License. 📄📝
+If you'd like to contribute to this project, please follow these guidelines:
+
+- Fork the repository.
+- Create a new branch for your feature or bug fix.
+- Commit your changes with clear messages.
+- Push your changes to your fork.
+- Create a pull request to the main branch of the original repository.
+
+## License 📄
+
+This project is licensed under the MIT License.
